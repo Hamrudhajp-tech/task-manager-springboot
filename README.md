@@ -38,3 +38,5 @@ This project allows users to create, view, update, and delete tasks.
 1. Clone the repository
 ```bash
 git clone https://github.com/your-username/taskmanager.git
+## 📸 Screenshot
+![Task Manager](app.png)
