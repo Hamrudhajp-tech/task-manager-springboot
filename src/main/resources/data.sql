@@ -1,0 +1,3 @@
+INSERT INTO TASK (ID, TITLE, DESCRIPTION, STATUS) VALUES (1, 'Task 1', 'First task', 'Pending');
+INSERT INTO TASK (ID, TITLE, DESCRIPTION, STATUS) VALUES (2, 'Task 2', 'Second task', 'Pending');
+INSERT INTO TASK (ID, TITLE, DESCRIPTION, STATUS) VALUES (3, 'Task 3', 'Third task', 'Pending');

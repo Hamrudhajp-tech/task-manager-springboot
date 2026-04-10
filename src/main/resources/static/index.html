@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Manager</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f8;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        input {
+            padding: 10px;
+            width: 200px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        .add-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .delete-btn {
+            background-color: red;
+            color: white;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: white;
+            margin: 10px auto;
+            padding: 10px;
+            width: 300px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>✨ Task Manager</h1>
+
+<input type="text" id="taskInput" placeholder="Enter task">
+<button class="add-btn" onclick="addTask()">Add</button>
+
+<ul id="taskList"></ul>
+
+<script>
+
+    function loadTasks() {
+        fetch("http://localhost:8080/tasks")
+            .then(res => res.json())
+            .then(data => {
+                let list = document.getElementById("taskList");
+                list.innerHTML = "";
+
+                data.forEach(task => {
+                    let li = document.createElement("li");
+                    li.innerHTML =
+                        li.innerHTML =
+                            "<span style='" + (task.completed ? "text-decoration: line-through;" : "") + "'>"
+                            + task.title + "</span>" +
+                            "<div>" +
+                            "<button onclick='completeTask(" + task.id + ")'>✔</button>" +
+                            "<button class='delete-btn' onclick='deleteTask(" + task.id + ")'>X</button>" +
+                            "</div>";
+                    list.appendChild(li);
+                });
+            });
+    }
+
+    function addTask() {
+        let task = document.getElementById("taskInput").value;
+        fetch("http://localhost:8080/tasks/add/" + task)
+            .then(() => {
+                document.getElementById("taskInput").value = "";
+                loadTasks();
+            });
+    }
+
+    function deleteTask(id) {
+        fetch("http://localhost:8080/tasks/delete/" + id)
+            .then(() => {
+                loadTasks();
+            });
+    }
+
+    loadTasks();
+    function completeTask(id) {
+        fetch("http://localhost:8080/tasks/complete/" + id)
+            .then(() => {
+                loadTasks();
+            });
+    }
+
+</script>
+
+</body>
+</html>
